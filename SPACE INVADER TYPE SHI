@@ -1,0 +1,39 @@
+main
+    COLUBK = $30
+    COLUP0 = $4C
+    COLUP1 = $08
+    player0x=50:player0y=50
+    player1x=20:player1y=20
+    missile0height=4:missile0y=255
+    NUSIZ0 = 16
+ 
+    player0:
+            %01000010
+            %11100111
+            %11100111
+            %01111110
+            %00111100
+            %00011000
+            %00011000
+end 
+
+    player1:
+            %10110110
+            %01101101
+            %10111111
+            %01101010
+            %11101110
+            %10111011
+            %11101110
+            %01010111
+end
+
+ if missile0y>240 then goto skip
+if missile0y = missile0y-2:goto draw_loop
+skip
+ if joy0fire then missile0y = player0y-2:missile0x=player0x+4
+
+draw_loop
+    drawscreen      
+    goto main
+
