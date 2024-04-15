@@ -270,20 +270,20 @@ end
    player0y = y
    player1x = a 
    player1y = b
-   
+
    c = c + 1
    if c>1 then pfscroll left
    
    a =  a - 2 
-   
-   if a < 5 then a = 160:score = score + 1: r = rand ; resets the obstacle's position to the start
+    
+   if a < 5 then a = 160:score = score + 100: r = rand  ; resets the obstacle's position to the start
                                                       ; increments the score, and randomizes the obstacle
    
-   if joy0up then y = y-1 : AUDC0 = 4: AUDV0 = 2 : AUDF0 = 31 
-   if joy0down then y = y+1 : AUDC0 = 4: AUDV0 = 2 : AUDF0 = 31 
+   if joy0up then y = y-1 
+   if joy0down then y = y+1 
 
-   if !collision(player0,player1) then AUDC0 = 1: AUDV0 = 2 : AUDF0 = 31 else AUDC0 = 0
-    
+   if !collision(player0,player1) then AUDC0 = 1: AUDV0 = 2 : AUDF0 = 31
+ 
    if y<37 then y=37 ; restrains the car to not move past the road
    if y>72 then y=72
 
@@ -348,6 +348,3 @@ end
  if joy0fire then player0x = 60 : player0y = 60 : a = 160 : b = 71 : goto gamestart
   
  goto gameover
- 
-
- 
