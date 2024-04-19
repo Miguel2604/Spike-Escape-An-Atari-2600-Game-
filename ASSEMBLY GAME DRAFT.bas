@@ -2,9 +2,9 @@
     y = 60 ; player0 y pos
     a = 50 ; player1 (obstacle) x pos
     b = 71 ; player1 (obstacle) y pos
-    r = 10 ; obstacle counter
-
-    COLUBK=$1C ; background color 
+    r = 10 ; obstacle counter    
+    scorecolor = $0E
+    COLUBK=$94 ; background color 
 
     goto MainMenuScreen
 
@@ -25,42 +25,84 @@ MainMenuScreen ; displays the title screen before game starts
 end
 
   drawscreen
- if joy0fire then goto gamestart ; if fire button is pressed, it proceeds to gamestart
+ ; g = difficulty flag 
+ if joy0fire then g = 1 : goto DifficultySettings ; if fire button is pressed, it proceeds to gamestart
  goto MainMenuScreen
+
+DifficultySettings 
+ 
+ 
+  
+ if joy0up || g = 1 then g = 1 : playfield:
+ XXXXX....X....XXXXX.X...X.......
+ X.......X.X...X.....X...X.......
+ XXXXX..XXXXX...XXX...X.X........
+ X.....X.....X.....X...X.........
+ XXXXX.X.....X.XXXXX...X.........
+ ................................
+ ................................
+ ................................
+ ................................
+ ................................
+end
+
+ if joy0down || g = 2 then g = 2 : playfield:
+ ................................
+ ................................
+ ................................
+ ................................
+ ................................
+ .....X...X....X....XXXX...XXXX..
+ .....X...X...X.X...X...X..X...X.
+ .....XXXXX..XXXXX..X....X.X....X
+ .....X...X.X.....X.X...X..X...X.
+ .....X...X.X.....X.X....X.XXXX..
+end
+
+ 
+
+ drawscreen
+
+ if joy0right && g = 1 then goto gamestart 
+ if joy0right && g = 2 then goto gamestart  
+
+ goto DifficultySettings
 
 gamestart
     
         ;road
         playfield:  
- ..............................
- ..............................
- ..............................
- XXXXXXXXXX.XXXXXXXXX.XXXXXXXXX
- ..............................
- ..............................
- ..............................
- ..............................
- ..............................
- XXXXXXXXXX.XXXXXXXXX.XXXXXXXXX
+ ..XXXX..........................
+ ...............XXXX.............
+ ................................
+ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+ ................................
+ ................................
+ ................................
+ ................................
+ ................................
+ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 end
-
+ 
 
 main
-    d = 50 ; delay variable 
-
-    COLUPF=$0F ; color of the road lines 
-    COLUP0=$00 ; color of the car
-    COLUP1=$00 ; color of the obstacle
+    d = 100 ; delay variable 
+    
+    COLUPF=$0E ; color of the playfield 
+    COLUP0=$0E ; color of the car
+    COLUP1=$1A ; color of the obstacle
 
     ; player0 is the car
     ; player1 is the obstacle 
 
     player0: ; Car
-        %00100100
-        %01111110
+        %01000010
         %11111111
         %11111111
-        %01111110
+        %10100010
+        %10100010
+        %01100100
+        %00111000
 end
  ; obstacle sprites
  if r < 50 then   player1:       
@@ -273,20 +315,21 @@ end
    
 
    c = c + 1 ; makes an endless loop for the road to scroll 
-   if c>1 then pfscroll left ; makes the road move by scrolling it, creating an illusion that the car is moving forward
+   if c>100 then pfscroll left : c = 0 ; makes the road move by scrolling it, creating an illusion that the car is moving forward
    
-   a =  a - 2 ; makes the obstacle move from right to left by repeatingly decrements 'a' which is the x position of player1(obstacle)
-    
-   if a < 20 then a = 160:score = score + 100: r = rand  ; resets the obstacle's position to the start
+   a =  a - g ; makes the obstacle move from right to left by repeatingly decrements 'a' which is the x position of player1(obstacle)
+   if a < 50 then AUDC1 = 4 : AUDF1 = 31 : AUDV1 = 2 else AUDC1 = 0 ; score sound 
+   if a < 20 then a = 160:score = score + 1: r = rand ; resets the obstacle's position to the start
                                                         ; increments the score, and randomizes the occurence of each obstacle
    
    if joy0up then y = y-1 ; controls the up and down movement of the car by changing the y position of the car
    if joy0down then y = y+1 
+   if joy0fire then AUDC1 = 
 
    if !collision(player0,player1) then AUDC0 = 1: AUDV0 = 2 : AUDF0 = 31 ; the background sound will not stop until there is a collision 
  
    ; restrains the car to not move past the road 
-   if y<37 then y=37 
+   if y<39 then y=39 
    if y>72 then y=72
 
    if collision(player0,player1) then goto stopaftercollision   ; collision detection 
@@ -295,28 +338,29 @@ end
    goto main
 
 stopaftercollision
-   if d <= 50 && d > 25 then AUDC0 = 3 : AUDV0 = 2 : AUDV0 = 10 else AUDC0 = 0 ; boom sound when car hits the obstacle
-   COLUP0 = $76
+   if d <= 100 && d > 75 then AUDC0 = 3 : AUDV0 = 10 : AUDF0 = 31 else AUDC0 = 0 ; boom sound when car hits the obstacle
+   COLUP0 = $0E
+   COLUP1 = $1A
    player0: ; animation sprite after collision 
     %00000000
     %00000000
     %00000000
     %00000000
     %00000000
-    %10101010
-    %10101000
-    %11111010
-    %10101010
-    %10111010
-    %00000010
-    %10101010
-    %10101010
-    %11111010
-    %10101010
-    %10111010
+    %01111111
+    %01010101
+    %11000001
+    %10010001
+    %10000001
+    %11101101
+    %11101101
+    %10000001
+    %11000011
+    %01100110
+    %00111100
 end  
-   player0x = x
-   player0y = y
+   player0x = x - 3
+   player0y = y + 4
    player1x = a + 6 ; makes the screen freeze by setting the x and y pos of the car and the obstacle to it's current position
    player1y = b
    drawscreen
@@ -333,11 +377,11 @@ gameover
    player1y = 0
    score = 0
  playfield:
- .XXX.XXX.XX.XX.XXX..............
- .X...X.X.X.X.X..................
- .X.X.XXX.X.X.X.XXX....X.X.X.X...
- .X.X.X.X.X.X.X..................
- .XXX.X.X.X.X.X.XXX..............
+ .XXX.XXX.XX.XX.XXXXX............
+ .X...X.X.X.X.X.X................
+ .X.X.XXX.X.X.X.XXXXX..X.X.X.X.X.
+ .X.X.X.X.X.X.X.X................
+ .XXX.X.X.X.X.X.XXXXX............
  ............XXXX.X.X.XXXXX.XX...
  ............X..X.X.X.X.....X.X..
  .X.X.X.X.X..X..X.X.X.X.XXX.XX...
