@@ -1,3 +1,5 @@
+    ; GROUP 4 - BLOCK 2-3 BSCS
+    
     x = 60 ; player0 x pos
     y = 60 ; player0 y pos
     a = 50 ; player1 (obstacle) x pos
@@ -25,7 +27,7 @@ MainMenuScreen ; displays the title screen before game starts
 end
 
   drawscreen
- ; g = difficulty flag 
+ ; g = difficulty flag  
  if joy0fire then g = 1 : goto DifficultySettings ; if fire button is pressed, it proceeds to gamestart
  goto MainMenuScreen
 
