@@ -11,7 +11,8 @@ To run the game, follow these steps:
 3. Search for "Atari Dev Studio" in the Extensions Marketplace.
 4. Install the "Atari Dev Studio" extension.
 5. Once installed, open the game file in VSCode.
-6. Press `F5` or click on the rocketship icon in the bottom toolbar to launch the game.
+6. Select the .bas file 
+7. Press `F5` or click on the rocketship icon in the bottom toolbar to launch the game.
 
 ## How to Run the Game Using Stella (Atari 2600 Emulator) 
 
