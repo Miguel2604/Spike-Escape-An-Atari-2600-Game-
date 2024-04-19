@@ -13,8 +13,6 @@ To run the game, follow these steps:
 5. Once installed, open the game file in VSCode.
 6. Press `F5` or click on the rocketship icon in the bottom toolbar to launch the game.
 
-## How to Run the Game Using VSCode
-
 ## How to Run the Game Using Stella (Atari 2600 Emulator) 
 
 To run the game using Stella emulator for Atari 2600, follow these steps:
