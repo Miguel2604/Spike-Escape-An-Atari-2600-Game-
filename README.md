@@ -8,13 +8,30 @@ Welcome to **Atari 2600 Endless Runner: Spike Escape**! This classic-style game,
 
 To run the game using the Javatari online emulator, follow these steps:
 
-1. **Access Javatari Emulator**:
+1. **Download the Game**:
+   - Download the `Spike Escape.bin` file of the game.
+
+2. **Access Javatari Emulator or any Atari 2600 Emulator of your choice**:
    - Open your web browser and go to the [Javatari Emulator](https://javatari.org/).
 
-2. **Run the Game**:
-   - Once on the Javatari website, click on "Choose File" or "Load ROM".
-   - Navigate to the directory where the game's `.bin` file is located and select it.
+3. **Run the Game**:
+   - Once on the Javatari website, click on "Open ROM file".
+   - Navigate to the directory where you downloaded the game's `.bin` file and select it.
    - The game should start running in the emulator window.
+
+## Game Manual
+
+- **Starting the Game**:
+  - Press the `Space` (fire button) to proceed to the difficulty settings screen.
+  - Use the `Up` and `Down` arrow keys to highlight either EASY or HARD difficulty.
+  - Press the `Right` arrow key to confirm your difficulty selection and start the game.
+
+- **During the Game**:
+  - Use the `Up` and `Down` arrow keys to move the car up and down to avoid spike strips.
+
+- **After Game Over**:
+  - Press the `Left` arrow key to return to the difficulty selection screen.
+  - Press `Space` to restart the game with the same difficulty.
 
 Enjoy playing the game!
 
